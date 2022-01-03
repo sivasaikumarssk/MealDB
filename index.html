@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main page</title>
+
+    <style>
+        body{
+            background-color: black;
+            color: red;
+            text-align: center;
+        }
+        button{
+            padding: 5px;
+            width: 40%;
+            background-color: teal;
+            cursor: pointer;
+        }
+        #nav{
+            border: 1px solid red;
+            display: flex;
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <button onclick="menu()" id="menu">Menu</button>
+        <button onclick="login()" id="login">Login</button>
+        <button onclick="signup()" id="signup">Signup</button>
+    </div>
+    <h1>Welcome to Food mania</h1>
+</body>
+</html>
+
+<script>
+    function menu(){
+        window.location.href = "menu.html"
+    }
+</script>

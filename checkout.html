@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkout</title>
+    <style>
+        #details{
+            
+            text-align: center;
+            padding-top:50px;
+        }
+        body{
+            background-color: black;
+            color: white;
+        }
+        #top{
+            border: 1px solid red;
+            display: grid;
+            grid-template-columns: auto;
+            background-color: red;
+            text-align: center;
+            
+        }
+        #btn{
+            padding: 12px;
+            width: 10%;
+            background-color: greenyellow;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="top">
+    <h1>checkout page</h1>
+    </div>
+    <button onclick="cart()" id="btn">Back to Cart</button>
+    <div id="details">
+    <label for="">Name : </label><input type="text"><br>
+    <label for="">Email ID : </label><input type="text"><br>
+    <label for="">mobile no. : </label><input type="text"><br>
+    <label for="">Adress : </label><input type="text"><br>
+    <label for="">street : </label><input type="text"><br>
+    <label for="">state : </label><input type="text"><br>
+    <br>
+    <button id="submit">Submit</button>
+</div>
+</body>
+</html>
+
+<script>
+let btn = document.getElementById("submit");
+
+btn.addEventListener('click',function(){
+    alert('your order is accepted');
+    setTimeout(() => {
+        alert('your order is being cooked')
+    }, 3000);
+    setTimeout(() => {
+        alert('your order is ready')
+    }, 8000);
+    setTimeout(() => {
+        alert('Order out for delivery')
+    }, 10000);
+    setTimeout(() => {
+        alert('Order Delivered')
+        window.location.href = "index.html"
+    }, 12000);
+})
+
+function cart(){
+       window.location.href = "cart.html";
+    }
+</script>

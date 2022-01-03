@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu page</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        #buttons_div{
+            display: flex;
+        }
+        #cart{
+            padding: 12px;
+            width: 50%;
+            background-color: greenyellow;
+            color: black;
+        }
+        #home{
+            padding: 12px;
+            width: 50%;
+            background-color: greenyellow;
+            color: black;
+        }
+        #top{
+            border: 1px solid red;
+            display: grid;
+            grid-template-columns: auto auto;
+            text-align: center;
+            background-color: red;
+        }
+        button{
+            background-color: hotpink;
+            color: white;
+            padding: 5px;
+            width: 20%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="top">
+        <h1>Menu page</h1>
+        <h1 id="count"></h1>
+    </div>
+    <div id="buttons_div">
+        <button id="home" onclick="homeFunc()">Back to Home page</button>
+    <button id="cart" onclick="cartFunc()">Go to cart</button>
+   
+</div>
+    <br>
+    <br>
+    <div id="display"></div>
+</body>
+</html>
+
+<script>
+    let url = `https://www.themealdb.com/api/json/v1/1/categories.php`;
+    let display = document.getElementById("display");
+
+    let count = document.getElementById("count");
+
+    async function meals(){
+        let res = await fetch(url);
+        let data = await res.json();
+        let item =  data.categories;
+        items(item)
+        console.log('data:', data)
+
+    }
+    meals()
+
+    let mealsArr =JSON.parse(localStorage.getItem('sentitem')) || []
+    
+    function items(item){
+        item.map(function(ele){
+
+            let div = document.createElement('div');
+
+            let category = document.createElement("p");
+            category.textContent =`Category : ${ele.idCategory}`;
+
+            let name = document.createElement('p');
+            name.textContent =`Item Name : ${ele.strCategory}`;
+
+            let image = document.createElement('img');
+            image.src = ele.strCategoryThumb;
+
+            let desc = document.createElement('p');
+            desc.textContent =`Description : ${ele.strCategoryDescription}`;
+
+            let price = document.createElement("p");
+            price.textContent = `Rs. ${Math.round(Math.random()*500)}/-`;
+
+            let btn = document.createElement('button');
+            btn.textContent = "Add to Cart";
+            btn.addEventListener('click',function(){
+                btnFunc(ele)
+            });
+
+            let hr = document.createElement("hr") 
+
+            div.append(image,category,name,price,desc,price,btn,hr);
+            display.append(div);
+
+            
+        })
+
+        function btnFunc(ele){
+         mealsArr.push(ele);
+           // console.log('mealsArr:', ele)
+            localStorage.setItem("sentitem",JSON.stringify(mealsArr));
+
+        }
+        count.textContent = `Cart Items: ${mealsArr.length}`
+    }
+
+    function cartFunc(){
+       window.location.href = "cart.html";
+    }
+
+    function homeFunc(){
+        window.location.href = "index.html";
+    }
+</script>

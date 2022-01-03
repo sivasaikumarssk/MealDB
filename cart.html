@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        #top{
+            border: 1px solid red;
+            display: grid;
+            grid-template-columns: auto auto auto;
+            text-align: center;
+            background-color: red;
+            
+        }
+        button{
+            padding: 5px;
+            width: 20%;
+            background-color: hotpink;
+            color: white;
+            cursor: pointer;
+        }
+        #buttons_div{
+            display: flex;
+           
+            
+        }
+        #menu{
+            padding: 12px;
+            width: 50%;
+            background-color: greenyellow;
+            color: black;
+        }
+        #checkout{
+            width: 50%;
+            background-color: greenyellow;
+            color: black;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="top">
+          <h1>Cart</h1>
+          <h2 id="count">Count:</h2>
+          <h2 id="total">Total:</h2>
+    </div>
+    <div id="buttons_div">
+        <button onclick="menuFunc()" id="menu">Back to Menu</button>
+        <button onclick="checkoutFunc()" id="checkout">go to Payment</button>
+    </div>
+    <div id="show"></div>
+</body>
+</html>
+<script>
+    let show = document.getElementById("show");
+
+    let count = document.getElementById("count");
+
+    let receive = JSON.parse(localStorage.getItem("sentitem"));
+
+    let total = document.getElementById("total");
+
+    let priceArr =[];
+
+    //mapping through local storage.
+    function showItems(receive){
+        show.innerHTML="";
+        receive.map(function(el){
+            //console.log('el:', el)
+            let div = document.createElement('div');
+
+                let category = document.createElement("p");
+                category.textContent =`Category : ${el.idCategory}`;
+
+                let name = document.createElement('p');
+                name.textContent =`Item Name : ${el.strCategory}`;
+
+                let image = document.createElement('img');
+                image.src = el.strCategoryThumb;
+
+                let desc = document.createElement('p');
+                desc.textContent =`Description : ${el.strCategoryDescription}`;
+
+                let price = document.createElement("p");
+                price.textContent = Math.round(Math.random()*500);
+
+                let btn2 = document.createElement('button');
+                btn2.textContent = "Remove Item";
+                btn2.addEventListener('click',function(){
+                    removeFunc();
+                })
+
+                let hr = document.createElement("hr") 
+
+                div.append(image,category,name,price,desc,btn2,hr);
+                show.append(div);
+
+                priceArr.push(price.textContent)
+        })
+
+    }
+    showItems(receive);
+                
+        //total items count
+        count.textContent = `Total Items : ${receive.length}`;
+        
+        
+        // remove function
+        function removeFunc(index,el){
+            receive.splice(index,1);
+           localStorage.setItem("sentitem", JSON.stringify(receive));
+           showItems(receive);
+        }
+
+        //total price
+       var totalPrice = priceArr.reduce(function(acc,cv){
+            return acc+Number(cv);
+        },0)
+
+        total.textContent = `Total = Rs.${totalPrice}/-`
+        
+        //back to menu
+        function menuFunc(){
+            window.location.href="menu.html"
+        }
+        //checkout function
+        function checkoutFunc(){
+            window.location.href="checkout.html"
+        }
+
+</script>
